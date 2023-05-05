@@ -1,16 +1,20 @@
 {
     "configurations": [
         {
-            "name": "Pico",
+            "name": "Win32",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${env:PICO_SDK_PATH}/**"
+                "${workspaceFolder}/../../tcp-2/pico-tcp-server/lib/pico-sdk/**"
             ],
-            "defines": [],
-            "compilerPath": "${env:PICO_INSTALL_PATH}/gcc-arm-none-eabi/bin/arm-none-eabi-gcc.exe",
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "compilerPath": "C:\\MinGW\\bin\\gcc.exe",
             "cStandard": "c11",
-            "cppStandard": "c++11",
-            "intelliSenseMode": "linux-gcc-arm",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "windows-gcc-x86",
             "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
