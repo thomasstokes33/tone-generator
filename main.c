@@ -15,7 +15,7 @@ int playNote(uint32_t gpio, float frequency) {
     pwm_set_wrap(slice, 3);
     pwm_set_chan_level(slice, PWM_CHAN_A, 1);
     
-    pwm_set_chan_level(slice, PWM_CHAN_B, 3);
+    pwm_set_chan_level(slice, PWM_CHAN_A, 3);
     
 
     pwm_set_enabled(slice, true);
