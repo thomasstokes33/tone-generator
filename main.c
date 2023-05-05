@@ -23,6 +23,6 @@ int playNote(uint32_t gpio, float frequency) {
 
 }
 int main() {
-   
+   playNote(buzzerPin, 27.5f);
 }
 
