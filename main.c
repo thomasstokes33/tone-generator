@@ -33,11 +33,11 @@ int64_t disablePin(alarm_id_t id, void *user_data) {
     gpio_put(16,0);
     return 0;
 }
-int64_t flash(alarm_id_t id, void *user_data) {
+bool flash(struct repeating_timer *t) {
     gpio_put(16,1);
     int pinValue=16;
     add_alarm_in_ms(250,&disablePin,&pinValue,true);
-    return 0;
+    return true;
 }
 
 int main() {
@@ -48,7 +48,7 @@ int main() {
    gpio_set_dir(16, GPIO_OUT);
    
    struct repeating_timer timer;
-   add_repeating_timer_ms(500,&flash,NULL,&timer);
+   add_repeating_timer_ms(1000,&flash,NULL,&timer);
     
 
 
