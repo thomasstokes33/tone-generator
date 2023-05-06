@@ -33,18 +33,25 @@ int64_t disablePin(alarm_id_t id, void *user_data) {
     gpio_put(16,0);
     return 0;
 }
+int64_t flash(alarm_id_t id, void *user_data) {
+    gpio_put(16,1);
+    int pinValue=16;
+    add_alarm_in_ms(250,&disablePin,&pinValue,true);
+    return 0;
+}
 
 int main() {
-    printf("starting\n");
+   stdio_init_all();
+   printf("starting\n");
    playNote(buzzerPin, 100000.5f);
    gpio_init(16);
    gpio_set_dir(16, GPIO_OUT);
-    int pinValue=16;
-   while (1) {
-      gpio_put(16, 1);
-      add_alarm_in_ms(250,&disablePin,&pinValue,true);
+   
+   struct repeating_timer timer;
+   add_repeating_timer_ms(500,&flash,NULL,&timer);
+    
 
-   }
+
    
 }
 

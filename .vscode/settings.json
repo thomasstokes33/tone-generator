@@ -1,6 +1,7 @@
 {
     "files.associations": {
         "clocks.h": "c",
-        "stdint.h": "c"
+        "stdint.h": "c",
+        "pwm.h": "c"
     }
 }
