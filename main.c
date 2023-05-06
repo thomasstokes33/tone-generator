@@ -5,7 +5,9 @@
 #include "main.h"
 #include <stdint.h>
 
-int playNote(uint32_t gpio, float frequency) {
+
+float* freq;
+void playNote(uint32_t gpio, float frequency) {
      gpio_set_function(buzzerPin, GPIO_FUNC_PWM);
     
     uint32_t slice = pwm_gpio_to_slice_num(buzzerPin);
@@ -46,13 +48,44 @@ bool flash(struct repeating_timer *t) {
     return true;
 }
 
+void changeFreq(uint gpio, uint32_t event_mask) {
+    if (gpio==20) {
+        freq--;
+        if (freq< &freqs[0]) {
+            freq = &freqs[0];
+        }
+        
+    } else if (gpio==21) {
+        freq++;
+        if (freq>&freqs[freqSize-1]) {
+            freq = &freqs[freqSize-1];
+        }
+
+    } else {
+        freq = &freqs[middleCIndex]; //last button resets
+        
+    }
+    playNote(buzzerPin, *freq);
+}
+
 int main() {
    stdio_init_all();
    sleep_ms(3000);
-   playNote(buzzerPin, 10000.5f);
+   
    gpio_init(16);
    gpio_set_dir(16, GPIO_OUT);
-   
+
+
+   gpio_init(20);
+   gpio_set_dir(20,  GPIO_IN);
+   gpio_init(21);
+   gpio_set_dir(21,  GPIO_IN);
+   gpio_init(22);
+   gpio_set_dir(22,  GPIO_IN); 
+   freq = &freqs[middleCIndex];
+   printf("freq: %f\n",*freq);
+   playNote(buzzerPin, *freq);
+   gpio_set_irq_enabled_with_callback(20,GPIO_IRQ_LEVEL_LOW,true,&changeFreq);
    struct repeating_timer timer;
    add_repeating_timer_ms(1000,&flash,NULL,&timer);
    int x =0;
