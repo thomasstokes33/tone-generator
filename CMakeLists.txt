@@ -18,7 +18,7 @@ add_executable(main)
 # Add pico_stdlib library which aggregates commonly used features
 target_link_libraries(main pico_stdlib hardware_pwm hardware_clocks)
 
-
+pico_enable_stdio_usb(main 1)
 # create map/bin/hex/uf2 file in addition to ELF.
 pico_add_extra_outputs(main)
 
