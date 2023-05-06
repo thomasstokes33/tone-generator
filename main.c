@@ -31,6 +31,9 @@ int playNote(uint32_t gpio, float frequency) {
 int main() {
     printf("starting\n");
    playNote(buzzerPin, 100000.5f);
+   while (1) {
+      
+   }
    
 }
 
