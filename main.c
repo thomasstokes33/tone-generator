@@ -37,18 +37,19 @@ void playNote(uint32_t gpio, float frequency) {
 
 int64_t disablePin(alarm_id_t id, void *user_data) {
     gpio_put(16,0);
-    printf("light off\n");
+    //printf("light off\n");
     return 0;
 }
 bool flash(struct repeating_timer *t) {
     gpio_put(16,1);
-    printf("light on\n");
+    //printf("light on\n");
     int pinValue=16;
     add_alarm_in_ms(250,&disablePin,&pinValue,true);
     return true;
 }
 
 void changeFreq(uint gpio, uint32_t event_mask) {
+    printf("gpio: %d",gpio);
     if (gpio==20) {
         freq--;
         if (freq< &freqs[0]) {
@@ -65,6 +66,8 @@ void changeFreq(uint gpio, uint32_t event_mask) {
         freq = &freqs[middleCIndex]; //last button resets
         
     }
+    printf("freq: %f\n",*freq);
+
     playNote(buzzerPin, *freq);
 }
 
@@ -83,9 +86,10 @@ int main() {
    gpio_init(22);
    gpio_set_dir(22,  GPIO_IN); 
    freq = &freqs[middleCIndex];
-   printf("freq: %f\n",*freq);
    playNote(buzzerPin, *freq);
-   gpio_set_irq_enabled_with_callback(20,GPIO_IRQ_LEVEL_LOW,true,&changeFreq);
+   gpio_set_irq_enabled_with_callback(20,GPIO_IRQ_EDGE_FALL,true,&changeFreq);  //fall used so it doesn't jump to low
+   gpio_set_irq_enabled_with_callback(21,GPIO_IRQ_EDGE_FALL,true,&changeFreq);
+   gpio_set_irq_enabled_with_callback(22,GPIO_IRQ_EDGE_FALL,true,&changeFreq);
    struct repeating_timer timer;
    add_repeating_timer_ms(1000,&flash,NULL,&timer);
    int x =0;
