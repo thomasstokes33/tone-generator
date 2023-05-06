@@ -1,5 +1,9 @@
+
+#ifndef MAIN_H
 #include "pico/stdlib.h"
 #include <stdint.h>
+#define middleCIndex 39
+#define freqSize 88
 float freqs[] = {27.5f,
 29.13524f,
 30.86771f,
@@ -89,3 +93,5 @@ float freqs[] = {27.5f,
 3951.066f,
 4186.009f};
 static const uint64_t buzzerPin = 18;
+
+#endif
