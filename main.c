@@ -21,12 +21,16 @@ int playNote(uint32_t gpio, float frequency) {
     
     
     
-
+    printf("slice: %d\n", slice);
+    printf("clock_freq: %d\n", clock_freq);
+    printf("wrap: %d\n", wrap);
     pwm_set_enabled(slice, true);
 
 
 }
 int main() {
-   playNote(buzzerPin, 1000.5f);
+    printf("starting\n");
+   playNote(buzzerPin, 100000.5f);
+   
 }
 
