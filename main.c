@@ -11,11 +11,15 @@ int playNote(uint32_t gpio, float frequency) {
      gpio_set_function(buzzerPin, GPIO_FUNC_PWM);
     
     uint32_t slice = pwm_gpio_to_slice_num(buzzerPin);
+    uint32_t clock_freq = clock_get_hz(clk_sys);
+    uint64_t divider = 1;
+    uint32_t wrap = clock_freq /(divider * frequency);
 
-    pwm_set_wrap(slice, 3);
+
+    pwm_set_wrap(slice, wrap);
     pwm_set_chan_level(slice, PWM_CHAN_A, 1);
     
-    pwm_set_chan_level(slice, PWM_CHAN_A, 3);
+    
     
 
     pwm_set_enabled(slice, true);
@@ -23,6 +27,6 @@ int playNote(uint32_t gpio, float frequency) {
 
 }
 int main() {
-   playNote(buzzerPin, 27.5f);
+   playNote(buzzerPin, 1000.5f);
 }
 
