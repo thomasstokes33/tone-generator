@@ -16,8 +16,9 @@ int playNote(uint32_t gpio, float frequency) {
     uint32_t wrap = clock_freq /(divider * frequency);
 
 
-    pwm_set_wrap(slice, wrap);
-    pwm_set_chan_level(slice, PWM_CHAN_A, 1);
+    pwm_set_wrap(slice, wrap); //sets the value to wrap to 0 at
+    pwm_set_clkdiv(slice, divider); //sets the divider which is when the counter increments: sysclock/divider
+    pwm_set_chan_level(slice, PWM_CHAN_A, 1); //counter compare value for a channel
     
     
     
