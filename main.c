@@ -31,10 +31,12 @@ int playNote(uint32_t gpio, float frequency) {
 
 int64_t disablePin(alarm_id_t id, void *user_data) {
     gpio_put(16,0);
+    printf("light off\n");
     return 0;
 }
 bool flash(struct repeating_timer *t) {
     gpio_put(16,1);
+    printf("light on\n");
     int pinValue=16;
     add_alarm_in_ms(250,&disablePin,&pinValue,true);
     return true;
@@ -42,15 +44,18 @@ bool flash(struct repeating_timer *t) {
 
 int main() {
    stdio_init_all();
-   printf("starting\n");
+   
    playNote(buzzerPin, 100000.5f);
    gpio_init(16);
    gpio_set_dir(16, GPIO_OUT);
    
    struct repeating_timer timer;
    add_repeating_timer_ms(1000,&flash,NULL,&timer);
+   int x =0;
+    while(1){
+        
+        }
     
-
 
    
 }
